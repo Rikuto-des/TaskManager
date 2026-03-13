@@ -1,0 +1,93 @@
+name: Project Automation
+
+on:
+  issues:
+    types: [opened, closed, reopened]
+  pull_request:
+    types: [closed]
+
+env:
+  PROJECT_NUMBER: 3
+  PROJECT_OWNER: Rikuto-des
+
+jobs:
+  issue-opened:
+    if: github.event_name == 'issues' && github.event.action == 'opened'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add to project
+        uses: actions/add-to-project@v1
+        id: add
+        with:
+          project-url: https://github.com/users/Rikuto-des/projects/3
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+
+      - name: Set status to IceBox
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+        run: |
+          gh project item-edit \
+            --project-id "$(gh project view 3 --owner Rikuto-des --format json --jq '.id')" \
+            --id "${{ steps.add.outputs.itemId }}" \
+            --field-id "PVTSSF_lAHOCPcVIs4BRmiGzg_YfTI" \
+            --single-select-option-id "9f3b677d"
+
+  issue-closed:
+    if: github.event_name == 'issues' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set status to Done
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+        run: |
+          ITEM_ID=$(gh project item-list 3 --owner Rikuto-des --format json \
+            --jq ".items[] | select(.content.number == ${{ github.event.issue.number }}) | .id")
+          if [ -n "$ITEM_ID" ]; then
+            gh project item-edit \
+              --project-id "$(gh project view 3 --owner Rikuto-des --format json --jq '.id')" \
+              --id "$ITEM_ID" \
+              --field-id "PVTSSF_lAHOCPcVIs4BRmiGzg_YfTI" \
+              --single-select-option-id "372152bd"
+          fi
+
+  issue-reopened:
+    if: github.event_name == 'issues' && github.event.action == 'reopened'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set status to CurrentBackLog
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+        run: |
+          ITEM_ID=$(gh project item-list 3 --owner Rikuto-des --format json \
+            --jq ".items[] | select(.content.number == ${{ github.event.issue.number }}) | .id")
+          if [ -n "$ITEM_ID" ]; then
+            gh project item-edit \
+              --project-id "$(gh project view 3 --owner Rikuto-des --format json --jq '.id')" \
+              --id "$ITEM_ID" \
+              --field-id "PVTSSF_lAHOCPcVIs4BRmiGzg_YfTI" \
+              --single-select-option-id "42aaa658"
+          fi
+
+  pr-merged:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set linked issues to Done
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+        run: |
+          # Get linked issue numbers from PR body (e.g., "Closes #1, #2")
+          PR_BODY="${{ github.event.pull_request.body }}"
+          ISSUE_NUMS=$(echo "$PR_BODY" | grep -oP '(?:closes|fixes|resolves)\s+#\K\d+' -i || true)
+          PROJECT_ID=$(gh project view 3 --owner Rikuto-des --format json --jq '.id')
+          for NUM in $ISSUE_NUMS; do
+            ITEM_ID=$(gh project item-list 3 --owner Rikuto-des --format json \
+              --jq ".items[] | select(.content.number == $NUM) | .id")
+            if [ -n "$ITEM_ID" ]; then
+              gh project item-edit \
+                --project-id "$PROJECT_ID" \
+                --id "$ITEM_ID" \
+                --field-id "PVTSSF_lAHOCPcVIs4BRmiGzg_YfTI" \
+                --single-select-option-id "372152bd"
+            fi
+          done
