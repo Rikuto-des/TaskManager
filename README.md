@@ -71,3 +71,21 @@ Triage ロールを付与することで、コードへの push 権限なしに 
 ## リンク
 
 - [GitHub Project](https://github.com/users/Rikuto-des/projects/3)
+
+<!-- stats-start -->
+## 📊 プロジェクト状況
+
+**進捗**: `████████████░░░░░░░░` 62% (8/13 stories)
+
+**合計ポイント**: 23 pts
+
+| ステータス | ストーリー数 | ポイント |
+|---|---|---|
+| 🧊 IceBox | 2 | 3 pts |
+| 📋 PreIPM | 1 | 1 pts |
+| 🤝 IPM | 2 | 4 pts |
+| 🚀 CurrentBackLog | 0 | 0 pts |
+| ✅ Done | 8 | 15 pts |
+
+*自動更新 by GitHub Actions*
+<!-- stats-end -->
