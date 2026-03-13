@@ -1,73 +1,73 @@
-# React + TypeScript + Vite
+# GithubBacklog - GitHub Projects によるバックログ管理
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TrackerBoot から GitHub Projects + Issues へバックログ管理を移行するためのリポジトリです。
 
-Currently, two official plugins are available:
+## 背景
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+これまでバックログ管理に TrackerBoot を使用していましたが、以下の理由から GitHub Projects への移行を検討しています。
 
-## React Compiler
+- **MCP 連携の精度**: TrackerBoot の MCP はデータを丸めたり要約してしまうが、GitHub MCP はフルデータを返すため正確
+- **ツール統合**: コードとバックログを GitHub に一元管理できる
+- **権限管理**: 開発者はコード + Issues、デザイナー・マネージャーは Issues / Projects のみ（Triage ロール）
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ワークフロー
 
-## Expanding the ESLint configuration
+TrackerBoot のワークフローを GitHub Projects のカスタムステータスで再現しています。
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+IceBox → PreIPM → IPM → CurrentBackLog → Done
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+| ステータス | 説明 |
+|---|---|
+| **IceBox** | アイデア段階。優先度未定のストーリー |
+| **PreIPM** | IPM 前の準備。ストーリーの詳細化・見積もり |
+| **IPM** | Iteration Planning Meeting。チームで合意形成 |
+| **CurrentBackLog** | 現在のイテレーションで実装するストーリー |
+| **Done** | 完了 |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Issue テンプレート（User Story）
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Issue は User Story 形式のテンプレートで作成します。
+
+- **Persona** - 対象ユーザー
+- **Why** - As / I want / So that 形式の動機
+- **Acceptance Criteria** - Gherkin 形式（Given / When / Then）の受け入れ基準
+- **Notes** - 補足事項
+
+## ストーリーポイント
+
+GitHub Projects の `Story Points`（NUMBER フィールド）で管理します。
+
+| ポイント | 目安 |
+|---|---|
+| 1 | 小規模。1日以内で完了 |
+| 2 | 中規模。2〜3日程度 |
+| 3 | 大規模。それ以上かかる見込み |
+
+Insights の「Sum of Story Points」でベロシティを可視化できます。
+
+## プロジェクト構成
+
 ```
+.github/
+  ISSUE_TEMPLATE/
+    user_story.yml    # User Story テンプレート
+    config.yml        # Issue テンプレート設定
+docs/
+  issue-*.md          # 作成済み Issue のドキュメント
+src/                  # TaskManager アプリ（React + Vite + Tailwind）
+```
+
+## 権限設計
+
+| ロール | コード | Issues / Projects |
+|---|---|---|
+| 開発者 | Write | 編集可 |
+| デザイナー・マネージャー | Read（Triage） | 編集可 |
+
+Triage ロールを付与することで、コードへの push 権限なしに Issues と Projects の操作が可能です。
+
+## リンク
+
+- [GitHub Project](https://github.com/users/Rikuto-des/projects/3)
