@@ -1,0 +1,54 @@
+name: User Story
+description: バックログのユーザーストーリーを作成する
+title: "[Story] "
+labels: ["user-story"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## User Story
+        ユーザーストーリー形式でバックログアイテムを記述してください。
+
+  - type: input
+    id: persona
+    attributes:
+      label: Persona
+      description: このストーリーの対象ペルソナ
+      placeholder: "例: ペルさん"
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: ユーザーストーリーの動機
+      value: |
+        **As** （ペルソナ名）
+        **I want** （達成したいこと）
+        **So that** （その理由）
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Gherkin形式で受け入れ基準を記述してください
+      value: |
+        ```gherkin
+        Scenario: シナリオ名
+        Given: 前提条件
+        When: アクション
+        Then: 期待される結果
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: 補足事項や技術的な注意点
+    validations:
+      required: false
