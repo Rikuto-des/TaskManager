@@ -13,7 +13,7 @@ interface Props {
 export function TaskModal({ task, isOpen, onClose, onSave, onDelete }: Props) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [status, setStatus] = useState<TaskStatus>('todo')
+  const [status, setStatus] = useState<TaskStatus>('icebox')
   const [points, setPoints] = useState<TaskPoints>(1)
   const [error, setError] = useState('')
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
@@ -27,7 +27,7 @@ export function TaskModal({ task, isOpen, onClose, onSave, onDelete }: Props) {
     } else {
       setTitle('')
       setDescription('')
-      setStatus('todo')
+      setStatus('icebox')
       setPoints(1)
     }
     setError('')

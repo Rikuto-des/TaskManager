@@ -3,11 +3,13 @@ import { STATUS_LABELS } from '../types/task'
 import { TaskCard } from './TaskCard'
 import { useState } from 'react'
 
-const COLUMNS: TaskStatus[] = ['todo', 'in_progress', 'done']
+const COLUMNS: TaskStatus[] = ['icebox', 'pre_ipm', 'ipm', 'current_backlog', 'done']
 
 const COLUMN_STYLES: Record<TaskStatus, string> = {
-  todo: 'border-t-gray-400',
-  in_progress: 'border-t-blue-500',
+  icebox: 'border-t-gray-400',
+  pre_ipm: 'border-t-yellow-500',
+  ipm: 'border-t-orange-500',
+  current_backlog: 'border-t-blue-500',
   done: 'border-t-green-500',
 }
 
@@ -43,7 +45,7 @@ export function BoardView({ tasks, onTaskClick, onStatusChange }: Props) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
       {COLUMNS.map(status => {
         const columnTasks = tasks.filter(t => t.status === status)
         return (
