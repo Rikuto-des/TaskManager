@@ -1,18 +1,18 @@
 # GithubBacklog - GitHub Projects によるバックログ管理
 
-TrackerBoot から GitHub Projects + Issues へバックログ管理を移行するためのリポジトリです。
+GitHub Projects + Issues でバックログ管理を行うためのリポジトリです。
 
 ## 背景
 
-これまでバックログ管理に TrackerBoot を使用していましたが、以下の理由から GitHub Projects への移行を検討しています。
+GitHub Projects を活用してバックログ管理を一元化するための取り組みです。
 
-- **MCP 連携の精度**: TrackerBoot の MCP はデータを丸めたり要約してしまうが、GitHub MCP はフルデータを返すため正確
+- **MCP 連携の精度**: GitHub MCP はフルデータを返すため、AI ツールとの連携で正確な情報を取得できる
 - **ツール統合**: コードとバックログを GitHub に一元管理できる
 - **権限管理**: 開発者はコード + Issues、デザイナー・マネージャーは Issues / Projects のみ（Triage ロール）
 
 ## ワークフロー
 
-TrackerBoot のワークフローを GitHub Projects のカスタムステータスで再現しています。
+GitHub Projects のカスタムステータスでバックログのワークフローを管理しています。
 
 ```
 IceBox → PreIPM → IPM → CurrentBackLog → Done
