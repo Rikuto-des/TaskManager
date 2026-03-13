@@ -57,19 +57,19 @@ export function TaskModal({ task, isOpen, onClose, onSave, onDelete }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-      <div className="relative bg-white rounded-xl shadow-xl w-full max-w-md mx-4 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+      <div className="relative bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md mx-4 p-6">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           {task ? 'タスクを編集' : 'タスクを追加'}
         </h2>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">タイトル</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">タイトル</label>
             <input
               type="text"
               value={title}
               onChange={e => { setTitle(e.target.value); setError('') }}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+              className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
               placeholder="タスク名を入力"
               autoFocus
             />
@@ -77,11 +77,11 @@ export function TaskModal({ task, isOpen, onClose, onSave, onDelete }: Props) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">説明</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">説明</label>
             <textarea
               value={description}
               onChange={e => setDescription(e.target.value)}
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none"
+              className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none"
               rows={3}
               placeholder="説明を入力（任意）"
             />
@@ -89,11 +89,11 @@ export function TaskModal({ task, isOpen, onClose, onSave, onDelete }: Props) {
 
           <div className="flex gap-4">
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">ステータス</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">ステータス</label>
               <select
                 value={status}
                 onChange={e => setStatus(e.target.value as TaskStatus)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
               >
                 {(Object.entries(STATUS_LABELS) as [TaskStatus, string][]).map(([key, label]) => (
                   <option key={key} value={key}>{label}</option>
@@ -102,7 +102,7 @@ export function TaskModal({ task, isOpen, onClose, onSave, onDelete }: Props) {
             </div>
 
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">ポイント</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">ポイント</label>
               <div className="flex gap-2">
                 {([1, 2, 3] as TaskPoints[]).map(p => (
                   <button
@@ -141,7 +141,7 @@ export function TaskModal({ task, isOpen, onClose, onSave, onDelete }: Props) {
           <div className="flex gap-2">
             <button
               onClick={onClose}
-              className="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
             >
               キャンセル
             </button>

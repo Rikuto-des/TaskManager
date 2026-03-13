@@ -51,16 +51,16 @@ export function BoardView({ tasks, onTaskClick, onStatusChange }: Props) {
         return (
           <div
             key={status}
-            className={`bg-gray-50 rounded-lg border-t-4 ${COLUMN_STYLES[status]} transition-colors ${
-              dragOverColumn === status ? 'bg-violet-50' : ''
+            className={`bg-gray-50 dark:bg-gray-800 rounded-lg border-t-4 ${COLUMN_STYLES[status]} transition-colors ${
+              dragOverColumn === status ? 'bg-violet-50 dark:bg-violet-900/30' : ''
             }`}
             onDragOver={e => handleDragOver(e, status)}
             onDragLeave={handleDragLeave}
             onDrop={e => handleDrop(e, status)}
           >
             <div className="p-3 flex items-center justify-between">
-              <h3 className="font-semibold text-sm text-gray-700">{STATUS_LABELS[status]}</h3>
-              <span className="text-xs text-gray-400 bg-white px-2 py-0.5 rounded-full">
+              <h3 className="font-semibold text-sm text-gray-700 dark:text-gray-300">{STATUS_LABELS[status]}</h3>
+              <span className="text-xs text-gray-400 bg-white dark:bg-gray-700 px-2 py-0.5 rounded-full">
                 {columnTasks.length}
               </span>
             </div>

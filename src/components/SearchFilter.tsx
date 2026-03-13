@@ -35,14 +35,14 @@ export function SearchFilter({ onFilterChange }: Props) {
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="タスクを検索..."
-          className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+          className="w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
         />
       </div>
 
       <select
         value={status}
         onChange={e => setStatus(e.target.value as TaskStatus | 'all')}
-        className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+        className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
       >
         <option value="all">すべてのステータス</option>
         {(Object.entries(STATUS_LABELS) as [TaskStatus, string][]).map(([key, label]) => (
